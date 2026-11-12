@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Personal Notes - Your Digital Notebook">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Personal Notes — Your Digital Notebook</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+                <a href="#" class="brand">
+                    <div class="brand-icon">✎</div>
+                    <div class="brand-text">
+                        <h2>Personal Notes</h2>
+                        <span>Your Digital Notebook</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Main Navigation -->
+            <nav class="sidebar-nav">
+
+                <div class="nav-menu">
+                    <button class="nav-item active" data-view="all">
+                        <span class="nav-icon">▤</span>
+                        <span>All Notes</span>
+                        <span class="nav-count" id="allCount">0</span>
+                    </button>
+
+                    <button class="nav-item" data-view="favorites">
+                        <span class="nav-icon">☆</span>
+                        <span>Favorites</span>
+                        <span class="nav-count" id="favoriteCount">0</span>
+                    </button>
+
+                    <button class="nav-item" data-view="pinned">
+                        <span class="nav-icon">⌖</span>
+                        <span>Pinned</span>
+                        <span class="nav-count" id="pinnedCount">0</span>
+                    </button>
+
+                    <button class="nav-item" data-view="trash">
+                        <span class="nav-icon">♧</span>
+                        <span>Trash</span>
+                        <span class="nav-count" id="trashCount">0</span>
+                    </button>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <!-- Categories -->
+                <div class="category-section">
+
+                    <div class="sidebar-section-header">
+                        <h3>Categories</h3>
+                        <button
+                            class="icon-button"
+                            id="addCategoryBtn"
+                            aria-label="Tambah kategori"
+                            title="Tambah kategori"
+                        >+</button>
+                    </div>
+
+                    <div class="category-list" id="categoryList">
+                        <!-- Categories rendered by JavaScript -->
+                    </div>
+
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <!-- Backup & Restore -->
+                <div class="backup-section">
+                    <h3>☁ Backup & Restore</h3>
+
+                    <button class="backup-button" id="exportBtn">
+                        ↓ Export Notes (JSON)
+                    </button>
+
+                    <button class="backup-button" id="importBtn">
+                        ↑ Import Notes (JSON)
+                    </button>
+
+                    <input
+                        type="file"
+                        id="importFile"
+                        accept=".json,application/json"
+                        hidden
+                    >
+                </div>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Made for your thoughts.</p>
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="main-content">
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div class="search-wrapper">
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search your notes..."
+                        autocomplete="off"
+                        aria-label="Cari catatan"
+                    >
+
+                    <span class="search-shortcut">Ctrl + K</span>
+                </div>
+
+                <div class="topbar-actions">
+
+                    <div class="view-toggle">
+                        <button
+                            class="view-button active"
+                            id="gridViewBtn"
+                            aria-label="Grid view"
+                            title="Grid view"
+                        >▦</button>
+
+                        <button
+                            class="view-button"
+                            id="listViewBtn"
+                            aria-label="List view"
+                            title="List view"
+                        >☷</button>
+                    </div>
+
+                    <button
+                        class="icon-button theme-toggle"
+                        id="themeToggle"
+                        aria-label="Ganti tema"
+                        title="Ganti tema"
+                    >☼</button>
+
+                    <button class="primary-button" id="newNoteBtn">
+                        <span>+</span> New Note
+                    </button>
+
+                    <button
+                        class="icon-button mobile-menu-btn"
+                        id="mobileMenuBtn"
+                        aria-label="Buka menu"
+                    >☰</button>
+
+                </div>
+
+            </header>
+
+
+            <!-- Content Area -->
+            <section class="content-area">
+
+                <!-- Page Heading -->
+                <div class="page-heading">
+                    <div class="heading-icon">▤</div>
+
+                    <div>
+                        <h1 id="pageTitle">All Notes</h1>
+                        <p id="pageDescription">
+                            Your notes, all in one place.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Filters -->
+                <div class="filter-toolbar">
+
+                    <div class="filter-list" id="filterList">
+
+                        <button
+                            class="filter-button active"
+                            data-category="all"
+                        >All</button>
+
+                        <!-- Category filters rendered by JavaScript -->
+
+                    </div>
+
+                    <div class="sort-wrapper">
+                        <label for="sortSelect">Sort:</label>
+
+                        <select id="sortSelect">
+                            <option value="latest">Latest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="alphabetical">A - Z</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <!-- Notes Container -->
+                <div class="notes-grid" id="notesContainer">
+
+                    <!-- Note cards rendered by JavaScript -->
+
+                </div>
+
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" hidden>
+
+                    <div class="empty-icon">📝</div>
+
+                    <h2>No notes found</h2>
+
+                    <p>
+                        Your notebook is waiting for its first note.
+                    </p>
+
+                    <button class="primary-button" id="emptyNewNoteBtn">
+                        + Create Your First Note
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= NOTE EDITOR MODAL ================= -->
+    <div class="modal-overlay" id="noteModal" hidden>
+
+        <div class="modal note-modal" role="dialog" aria-modal="true"
+            aria-labelledby="modalTitle">
+
+            <div class="modal-header">
+                <h2 id="modalTitle">Create New Note</h2>
+
+                <button
+                    class="icon-button"
+                    id="closeModalBtn"
+                    aria-label="Tutup modal"
+                >×</button>
+            </div>
+
+            <form id="noteForm">
+
+                <input type="hidden" id="noteId">
+
+                <div class="form-group">
+                    <label for="noteTitle">Title</label>
+
+                    <input
+                        type="text"
+                        id="noteTitle"
+                        placeholder="Give your note a title..."
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="noteContent">Content</label>
+
+                    <textarea
+                        id="noteContent"
+                        placeholder="Start writing your thoughts..."
+                        rows="8"
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="noteCategory">Category</label>
+
+                    <select id="noteCategory">
+                        <option value="General">General</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="cancelModalBtn"
+                    >Cancel</button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                        id="saveNoteBtn"
+                    >Save Note</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer" aria-live="polite">
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
